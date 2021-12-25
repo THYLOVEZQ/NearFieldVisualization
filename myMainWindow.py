@@ -58,7 +58,7 @@ class QmyMainWindow(QMainWindow):
     #显示近场数据
     @pyqtSlot()
     def __displayFile(self):
-        self.__fig=mpl.figure.Figure(figsize=(8, 5))
+        self.__fig = mpl.figure.Figure(figsize=(8, 5))
         self.__fig.suptitle("近场数据")
         figCanvas = FigureCanvas(self.__fig)
         self.setCentralWidget(figCanvas)
@@ -69,18 +69,20 @@ class QmyMainWindow(QMainWindow):
     # 这里必须加@pyqtSlot()，因为如果不加这句程序会不知道调用的是有参triggered还是无参，所以程序会执行两次
     @pyqtSlot()
     def on_action_triggered(self):
-        dirStr = QFileDialog.getExistingDirectory()  # 选择目录
-        if (dirStr == ""):
-            return
         icon = QIcon("./img/icon6.svg")
-        dirObj = QDir(dirStr)  # QDir对象
-        nodeText = dirObj.dirName()  # 最后一级目录的名称
-        item = QTreeWidgetItem(TreeItemType.itGroupItem.value)  # 节点类型
+        item = QTreeWidgetItem(TreeItemType.itTopItem.value)  # 节点类型
         item.setIcon(TreeColNum.colItem.value, icon)
         item.setText(TreeColNum.colItem.value, "工程文件")  # 第1列
-        item.setData(TreeColNum.colItem.value, Qt.UserRole, dirStr)  # 关联数据为目录全名
         self.ui.treeWidget.addTopLevelItem(item)
-        print(self.ui.treeWidget.topLevelItem(1).data(0, Qt.UserRole))
+        parItem = item
+        item = QTreeWidgetItem(TreeItemType.itGroupItem.value)  # 节点类型
+        item.setText(0, "近场数据")
+        #self.ui.treeWidget.currentItem()获得的当前项是指当前鼠标和键盘焦点所在项
+        # parItem = self.ui.treeWidget.currentItem()
+        parItem.addChild(item)
+        item = QTreeWidgetItem(TreeItemType.itGroupItem.value)  # 节点类型
+        item.setText(0, "远场数据")
+        parItem.addChild(item)
 
     def on_action_4_triggered(self):
         sys.exit(app.exec_())
@@ -88,6 +90,22 @@ class QmyMainWindow(QMainWindow):
     @pyqtSlot()
     def on_action_1_triggered(self):
         self.__displayFile()
+
+    #该函数用于添加近场文件
+    @pyqtSlot()
+    def on_action_2_triggered(self):
+        fileList, flt = QFileDialog.getOpenFileNames(self,
+                                                     "选择一个或多个文件", "", "Images(*.jpg)")
+        # 多选文件,返回两个结果，fileList是一个列表类型，存储了所有文件名； flt是设置的文件filter，即"Images(*.jpg)"
+        if (len(fileList) < 1):  # fileList是list[str]
+            return
+        #这里要选择添加节点的父节点
+        parItem = self.ui.treeWidget.currentItem()
+        if(parItem.type()==TreeItemType.itGroupItem and parItem.text()=="近场数据"):
+            return
+        elif(parItem.type==TreeItemType.itTopItem):
+            parItem=parItem.child(0)
+            print("0")
 
     def __initTree(self):
         #初始化目录树
