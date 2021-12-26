@@ -32,3 +32,8 @@ void MainWindow::on_action_1_triggered()
 {
 
 }
+
+void MainWindow::on_action_2_triggered()
+{
+
+}

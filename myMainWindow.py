@@ -95,16 +95,22 @@ class QmyMainWindow(QMainWindow):
     @pyqtSlot()
     def on_action_2_triggered(self):
         fileList, flt = QFileDialog.getOpenFileNames(self,
-                                                     "选择一个或多个文件", "", "Images(*.jpg)")
+                                                     "选择一个或多个文件", "", "dat(*.dat)")
         # 多选文件,返回两个结果，fileList是一个列表类型，存储了所有文件名； flt是设置的文件filter，即"Images(*.jpg)"
         if (len(fileList) < 1):  # fileList是list[str]
             return
         #这里要选择添加节点的父节点
         parItem = self.ui.treeWidget.currentItem()
-        if(parItem.type()==TreeItemType.itGroupItem and parItem.text()=="近场数据"):
-            return
+        print(parItem.text(TreeColNum.colItem.value))
+        if(parItem.type()==TreeItemType.itGroupItem.value and parItem.text(TreeColNum.colItem.value)=="近场数据"):
+            icon = QIcon("./img/icon8.svg")
+            item = QTreeWidgetItem(TreeItemType.itImageItem.value)  # 节点类型
+            item.setIcon(TreeColNum.colItem.value, icon)
+            item.setText(TreeColNum.colItem.value, "幅度文件")  # 第1列
+            item.setData(TreeColNum.colItem.value, Qt.UserRole, fileList)
+            parItem.addChild(item)
         elif(parItem.type==TreeItemType.itTopItem):
-            parItem=parItem.child(0)
+            # parItem=parItem.child(0)
             print("0")
 
     def __initTree(self):
