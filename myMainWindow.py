@@ -36,6 +36,8 @@ class QmyMainWindow(QMainWindow):
         self.ui.action_1.setIcon(icon)
         icon = QIcon("./img/icon7.svg")
         self.ui.action_2.setIcon(icon)
+        icon = QIcon("./img/icon9.svg")
+        self.ui.action_3.setIcon(icon)
         ##rcParams[]参数设置，以正确显示汉字
         mpl.rcParams['font.sans-serif'] = ['KaiTi', 'SimHei']
         mpl.rcParams['font.size'] = 12
@@ -87,8 +89,10 @@ class QmyMainWindow(QMainWindow):
     def on_action_4_triggered(self):
         sys.exit(app.exec_())
 
+    #该函数为显示近场数据
     @pyqtSlot()
     def on_action_1_triggered(self):
+        print(self.ui.treeWidget.currentItem().data(TreeColNum.colItem.value, Qt.UserRole))
         self.__displayFile()
 
     #该函数用于添加近场文件
@@ -101,14 +105,23 @@ class QmyMainWindow(QMainWindow):
             return
         #这里要选择添加节点的父节点
         parItem = self.ui.treeWidget.currentItem()
-        print(parItem.text(TreeColNum.colItem.value))
         if(parItem.type()==TreeItemType.itGroupItem.value and parItem.text(TreeColNum.colItem.value)=="近场数据"):
-            icon = QIcon("./img/icon8.svg")
-            item = QTreeWidgetItem(TreeItemType.itImageItem.value)  # 节点类型
-            item.setIcon(TreeColNum.colItem.value, icon)
-            item.setText(TreeColNum.colItem.value, "幅度文件")  # 第1列
-            item.setData(TreeColNum.colItem.value, Qt.UserRole, fileList)
-            parItem.addChild(item)
+            fileNum = len(fileList)
+            if(fileNum == 2):
+                icon = QIcon("./img/icon8.svg")
+                item = QTreeWidgetItem(TreeItemType.itImageItem.value)  # 节点类型
+                item.setIcon(TreeColNum.colItem.value, icon)
+                item.setText(TreeColNum.colItem.value, "幅度文件")  # 第1列
+                item.setData(TreeColNum.colItem.value, Qt.UserRole, fileList[0])
+                parItem.addChild(item)
+                item = QTreeWidgetItem(TreeItemType.itImageItem.value)  # 节点类型
+                item.setIcon(TreeColNum.colItem.value, icon)
+                item.setText(TreeColNum.colItem.value, "相位文件")  # 第1列
+                item.setData(TreeColNum.colItem.value, Qt.UserRole, fileList[1])
+                parItem.addChild(item)
+            else:
+                #警告:必须输入两组数据，一组为幅度信息，一组为相位信息
+                return
         elif(parItem.type==TreeItemType.itTopItem):
             # parItem=parItem.child(0)
             print("0")
@@ -139,8 +152,8 @@ class QmyMainWindow(QMainWindow):
     def on_action_4_triggered(self):
         sys.exit(app.exec_())
 
-    # 自定义右键按钮
-    def myListWidgetContext(self):
+
+    def myListWidgetContext(self):## 自定义右键按钮
         popMenu = QMenu()
         popMenu.addAction(QAction(u'字体放大', self))
         popMenu.addAction(QAction(u'字体减小', self))
@@ -157,6 +170,21 @@ class QmyMainWindow(QMainWindow):
             self.fontSize += 1
         elif q.text() == "字体减小":
             self.fontSize -= 1
+
+
+    @pyqtSlot()
+    def on_action_3_triggered(self):##删除选择节点
+        item = self.ui.treeWidget.currentItem()
+        #获得当前顶层节点的index值
+        index = self.ui.treeWidget.indexOfTopLevelItem(item)
+        if(item.type()==TreeItemType.itTopItem.value):
+            self.ui.treeWidget.takeTopLevelItem(index)
+        elif(item.type()==TreeItemType.itGroupItem.value):
+            #不能删除分组节点
+            return
+        else:
+            parItem = item.parent()
+            parItem.removeChild(item)
 
 
 if __name__ == "__main__":

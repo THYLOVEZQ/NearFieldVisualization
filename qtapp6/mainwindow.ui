@@ -49,6 +49,7 @@
     <addaction name="action"/>
     <addaction name="action_1"/>
     <addaction name="action_2"/>
+    <addaction name="action_3"/>
     <addaction name="separator"/>
     <addaction name="action_4"/>
    </widget>
@@ -76,6 +77,7 @@
    </attribute>
    <addaction name="action"/>
    <addaction name="action_2"/>
+   <addaction name="action_3"/>
    <addaction name="action_1"/>
    <addaction name="action_5"/>
   </widget>
@@ -93,7 +95,13 @@
    <widget class="QWidget" name="dockWidgetContents_2">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QTreeWidget" name="treeWidget"/>
+      <widget class="QTreeWidget" name="treeWidget">
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -120,22 +128,37 @@
        </property>
        <row>
         <property name="text">
-         <string>新建行</string>
+         <string>频率</string>
         </property>
        </row>
        <row>
         <property name="text">
-         <string>新建行</string>
+         <string>行数</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>列数</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>探头到天线距离</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>行扫描/列扫描</string>
         </property>
        </row>
        <column>
         <property name="text">
-         <string>新建列</string>
+         <string>幅度</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string>新建列</string>
+         <string>相位</string>
         </property>
        </column>
       </widget>
@@ -166,6 +189,11 @@
   <action name="action_2">
    <property name="text">
     <string>添加近场数据</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>删除该文件</string>
    </property>
   </action>
  </widget>
