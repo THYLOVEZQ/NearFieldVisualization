@@ -38,6 +38,7 @@ public:
     QAction *action_5;
     QAction *action_2;
     QAction *action_3;
+    QAction *action_6;
     QWidget *centralWidget;
     QGridLayout *gridLayout_2;
     QFrame *frame;
@@ -45,6 +46,7 @@ public:
     QMenu *menu;
     QMenu *menu_2;
     QMenu *menu_3;
+    QMenu *menu_4;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidget_2;
@@ -73,6 +75,8 @@ public:
         action_2->setObjectName(QStringLiteral("action_2"));
         action_3 = new QAction(MainWindow);
         action_3->setObjectName(QStringLiteral("action_3"));
+        action_6 = new QAction(MainWindow);
+        action_6->setObjectName(QStringLiteral("action_6"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout_2 = new QGridLayout(centralWidget);
@@ -101,6 +105,8 @@ public:
         menu_2->setObjectName(QStringLiteral("menu_2"));
         menu_3 = new QMenu(menuBar);
         menu_3->setObjectName(QStringLiteral("menu_3"));
+        menu_4 = new QMenu(menuBar);
+        menu_4->setObjectName(QStringLiteral("menu_4"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -175,6 +181,7 @@ public:
         menuBar->addAction(menu->menuAction());
         menuBar->addAction(menu_2->menuAction());
         menuBar->addAction(menu_3->menuAction());
+        menuBar->addAction(menu_4->menuAction());
         menu->addAction(action);
         menu->addAction(action_1);
         menu->addAction(action_2);
@@ -182,11 +189,13 @@ public:
         menu->addSeparator();
         menu->addAction(action_4);
         menu_2->addAction(action_5);
+        menu_4->addAction(action_6);
         mainToolBar->addAction(action);
         mainToolBar->addAction(action_2);
         mainToolBar->addAction(action_3);
         mainToolBar->addAction(action_1);
         mainToolBar->addAction(action_5);
+        mainToolBar->addAction(action_6);
 
         retranslateUi(MainWindow);
 
@@ -202,9 +211,14 @@ public:
         action_5->setText(QApplication::translate("MainWindow", "\347\224\237\346\210\220\350\277\234\345\234\272\346\225\260\346\215\256", Q_NULLPTR));
         action_2->setText(QApplication::translate("MainWindow", "\346\267\273\345\212\240\350\277\221\345\234\272\346\225\260\346\215\256", Q_NULLPTR));
         action_3->setText(QApplication::translate("MainWindow", "\345\210\240\351\231\244\350\257\245\346\226\207\344\273\266", Q_NULLPTR));
+        action_6->setText(QApplication::translate("MainWindow", "\347\250\213\345\272\217\346\226\207\346\241\243", Q_NULLPTR));
+#ifndef QT_NO_TOOLTIP
+        action_6->setToolTip(QApplication::translate("MainWindow", "\347\250\213\345\272\217\346\226\207\346\241\243", Q_NULLPTR));
+#endif // QT_NO_TOOLTIP
         menu->setTitle(QApplication::translate("MainWindow", "\350\217\234\345\215\225", Q_NULLPTR));
         menu_2->setTitle(QApplication::translate("MainWindow", "\350\277\220\350\241\214", Q_NULLPTR));
         menu_3->setTitle(QApplication::translate("MainWindow", "\350\247\206\345\233\276", Q_NULLPTR));
+        menu_4->setTitle(QApplication::translate("MainWindow", "\345\270\256\345\212\251", Q_NULLPTR));
         QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QApplication::translate("MainWindow", "\345\271\205\345\272\246", Q_NULLPTR));
         QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);

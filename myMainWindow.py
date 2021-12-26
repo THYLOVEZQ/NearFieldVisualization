@@ -11,6 +11,7 @@ from PyQt5.QtGui import QIcon, QCursor
 import os
 from enum import Enum
 from PyQt5 import QtCore
+import webbrowser
 
 class TreeItemType(Enum):    ##节点类型枚举类型
    itTopItem=1001    #顶层节点
@@ -38,6 +39,10 @@ class QmyMainWindow(QMainWindow):
         self.ui.action_2.setIcon(icon)
         icon = QIcon("./img/icon9.svg")
         self.ui.action_3.setIcon(icon)
+        icon = QIcon("./img/icon.svg")
+        self.ui.action_5.setIcon(icon)
+        icon = QIcon("./img/icon10.svg")
+        self.ui.action_6.setIcon(icon)
         ##rcParams[]参数设置，以正确显示汉字
         mpl.rcParams['font.sans-serif'] = ['KaiTi', 'SimHei']
         mpl.rcParams['font.size'] = 12
@@ -185,6 +190,10 @@ class QmyMainWindow(QMainWindow):
         else:
             parItem = item.parent()
             parItem.removeChild(item)
+
+    @pyqtSlot()
+    def on_action_6_triggered(self):#这里默认用IE打开，如何优化？使其使用系统默认浏览器打开网页
+        webbrowser.open("https://thylovezj.github.io/categories/PYQT5/")
 
 
 if __name__ == "__main__":
