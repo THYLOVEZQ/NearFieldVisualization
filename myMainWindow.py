@@ -172,9 +172,9 @@ class QmyMainWindow(QMainWindow):
             return
         # 输出那个Qmenu对象被点击
         if q.text() == "字体放大":
-            self.fontSize += 1
+            self.fontSize += 2
         elif q.text() == "字体减小":
-            self.fontSize -= 1
+            self.fontSize -= 2
 
 
     @pyqtSlot()
